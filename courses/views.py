@@ -17,7 +17,9 @@ def course_detail(request, id):
 @login_required(login_url='/login/')
 def enroll(request, id):
     course = Course.objects.get(id=id)
-    Enrollment.objects.create(user=request.user, course=course)
+    enrollment_exists = Enrollment.objects.filter(user=request.user, course=course).exists()
+    if not enrollment_exists:
+        Enrollment.objects.create(user=request.user, course=course)
     return redirect('my_courses')
 
 @login_required(login_url='/login/')
