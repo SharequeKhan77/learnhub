@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Category, Course, Lesson, Enrollment
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 # Create your views here.
 @login_required(login_url='/login/')
@@ -26,3 +28,14 @@ def enroll(request, id):
 def my_courses(request):
     enrollments = Enrollment.objects.filter(user=request.user)
     return render(request, 'courses/my_courses.html', {'enrollments': enrollments})
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+    else:
+        form = UserCreationForm()
+    return render(request, 'courses/register.html', {'form': form})
