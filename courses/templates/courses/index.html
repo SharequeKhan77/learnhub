@@ -80,22 +80,25 @@
         <div class="container mt-4">
             <h2 class="mb-4">Available Courses</h2>
             <div class="row">
-                {% for course in courses %}
+                {% for item in courses_data %}
                 <div class="col-md-4 mb-4">
                     <div class="card p-4">
-                    <div class="course-icon mb-3">
-                        <i class="fas fa-question-circle"></i>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="course-icon me-2">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h4 class="mb-0">{{ item.course.title }}</h4>
+                        </div>
+                        <p class="text-muted">{{ item.course.description }}</p>
+                        <p class="text-muted"><small><i class="fas fa-book me-1"></i>{{ item.lesson_count }} Lessons</small></p>
+                        <a href="{% url 'view_course' item.course.id %}" class="btn btn-primary">
+                            <i class="fas fa-play me-1"></i>Take Course
+                        </a>
                     </div>
-                    <h4>{{ course.title }}</h4>
-                    <p class="text-muted">{{ course.description }}</p>
-                    <a href="{% url 'view_course' course.id %}" class="btn btn-primary">
-                        <i class="fas fa-play me-1"></i>Take Course
-                    </a>
                 </div>
-                </div>
-                {% empty %}
-                <p class="text-muted">No courses available</p>
-                {% endfor %}
+        {% empty %}
+        <p class="text-muted">No courses available</p>
+        {% endfor %}
             </div>
         </div>
     </body>

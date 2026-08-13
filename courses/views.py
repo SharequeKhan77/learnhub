@@ -8,7 +8,15 @@ from django.contrib.auth import login
 @login_required(login_url='/login/')
 def index(request):
     courses = Course.objects.all()
-    return render(request, 'courses/index.html', {'courses': courses})
+    course_data = []
+    for course in courses:
+        lesson_count = Lesson.objects.filter(course=course).count()
+        course_data.append({
+            'course': course,
+            'lesson_count': lesson_count,
+            'category_name': course.category.name
+        })
+    return render(request, 'courses/index.html', {'courses_data': course_data})
 
 @login_required(login_url='/login/')
 def course_detail(request, id):

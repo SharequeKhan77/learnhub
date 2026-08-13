@@ -38,7 +38,7 @@
                 border-color: #3498db;
             }
 
-            .quiz-icon {
+            .course-icon {
                 font-size: 2rem;
                 color: #3498db;
             }
@@ -61,23 +61,29 @@
 
         <div class="container mt-4">
             <h2 class="mb-4">My Courses</h2>
-            <div class="row">
-                {% for enrollment in enrollments %}
-                <div class="col-md-4 mb-4">
-                    <div class="card p-4">
-                    <div class="course-icon mb-3">
-                        <i class="fas fa-question-circle"></i>
+            <div class="row" style="display: flex; flex-wrap: wrap;">
+            {% for enrollment in enrollments %}
+            <div class="col-md-4 mb-4" style="display: flex;">
+                <div class="card p-4" style="width: 100%;">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="course-icon me-2">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h4 class="mb-0">{{ enrollment.course.title }}</h4>
                     </div>
-                    <h4>{{ enrollment.course.title }}</h4>
                     <p class="text-muted">{{ enrollment.course.description }}</p>
                     <a href="{% url 'view_course' enrollment.course.id %}" class="btn btn-primary">
-                        <i class="fas fa-play me-1"></i>Take Course
+                        <i class="fas fa-play me-1"></i>Continue Learning
                     </a>
                 </div>
-                </div>
-                {% empty %}
-                <p class="text-muted">No courses available</p>
-                {% endfor %}
+            </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
+                <p class="text-muted">You haven't enrolled in any courses yet.</p>
+                <a href="/" class="btn btn-primary">Browse Courses</a>
+            </div>
+            {% endfor %}
             </div>
         </div>
     </body>
